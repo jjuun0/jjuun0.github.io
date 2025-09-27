@@ -110,7 +110,7 @@ use_math: true
 
 - 텍스트 프롬프트와 레퍼런스 이미지를 jointly 하게 condition된 이미지를 생성하는 모델을 학습하는 것이 목표임.
 
-- conditional 분포, $p(x\ | \ y,c)$를 근사하는 것이 목표임. 
+- conditional 분포, $p(x \mid y, \ c)$를 근사하는 것이 목표임. 
   
   - $x$ (타겟 이미지), $y$ (context image or ∅), $c$ (텍스트 프롬프트) 로 정의함.
   
@@ -120,7 +120,7 @@ use_math: true
 
 - 즉, $x$ (output 이미지), $y$ (context 이미지 or ∅), $c$ (텍스트 프롬프트) 일 때,
   
-  - 우리는 conditional 분포를 모델링함 → $p_θ(x\ | \ y,c)$
+  - 우리는 conditional 분포를 모델링함 → $p_θ(x \mid y, \ c)$
   
   - $y$ 가 주어졌을 때, context 기반 로컬 편집을 처리하고, $y$ 가 주어지지 않았을 때, free T2I 로 생성하도록 처리함.
 
@@ -154,9 +154,13 @@ use_math: true
 
 ### Rectified-flow objective
 
-- train loss: rectified flow-matching loss
-  
-  $\mathcal{L}_\theta=\mathbb{E}_{t \sim p(t), x, y, c}\left[\left\|v_\theta\left(z_t, t, y, c\right)-(\varepsilon-x)\right\|_2^2\right]$
+- train loss: rectified flow-matching loss. 
+
+  $$
+    \begin{equation}
+    \mathcal{L}_\theta=\mathbb{E}_{t \sim p(t), x, y, c}\left[\left\|v_\theta\left(z_t, t, y, c\right)-(\varepsilon-x)\right\|_2^2\right]
+    \end{equation}
+  $$
   
   - $z_t$ : $x$ 와 noise $\epsilon$ 을 선형보간한 latent → $z_t = (1−t)x+ tε$ 
   
@@ -253,5 +257,4 @@ use_math: true
 - distillation 과정이 시각적 아티팩트를 유발할 수 있음.
 
 ![img](assets/img/post/2025-09-21/Fig-15.png)
-
 

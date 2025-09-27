@@ -124,6 +124,10 @@
       
       {% include metadata-hook.html %}
       {% if page.use_math %}
-        {% include mathjax_support.html %}
+      {% include mathjax_support.html %}
       {% endif %}
+      
+  {% if page.mathjax %}
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+  {% endif %}
 </head>
