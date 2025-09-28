@@ -7,8 +7,10 @@ use_math: true
 ---
 
 # FLUX.1 Kontext: Flow Matching for In-Context Image Generation and Editing in Latent Space
-
-
+> [arxiv](https://arxiv.org/pdf/2506.15742)  
+> Labs, B. F., Batifol, S., Blattmann, A., Boesel, F., Consul, S., Diagne, C., ... & Smith, L.  
+> Black Forest Labs  
+> 25.06  
 
 ## Abstract
 
@@ -66,10 +68,11 @@ use_math: true
     
     2. Interactive speed: 1024x1024 이미지를 3~5 초안에 수행 가능함.
     
-    3. Iterative application: 여러 차례 연속적으로 편집을 통해 정교하게 이미지 수정이 가능함.![img](assets/img/post/2025-09-21/Fig-1.png)
+    3. Iterative application: 여러 차례 연속적으로 편집을 통해 정교하게 이미지 수정이 가능함.
+    
+  ![img](assets/img/post/2025-09-21/Fig-1.png)
 
-<img title="" src="assets/img/post/2025-09-21/Fig-2.png" alt="img" data-align="center">
-
+  ![img](assets/img/post/2025-09-21/Fig-2.png)
 
 
 ## 2. FLUX. 1
@@ -96,17 +99,41 @@ use_math: true
   
   - 분해된 3차원 회전 위치 임베딩(3D RoPE)을 활용하고, latent 토큰은 시공간 좌표로 인덱싱되며 회전 위치 임베딩을 활용함.)
   
-  . 
+  
     
     ![img](assets/img/post/2025-09-21/Fig-3.png)
     
     
     
-    (* 조금 더 분석 필요함.)
+- Flux vs Diffusion model
+
+  |        | Flux                          | Diffusion| 
+  | ------ | ----------------------------- | ------- |
+  | 핵심 방법론 | **Rectified Flow** | noise ε 예측 네트워크 |
+  | 내부 구조 | **Double/Single-stream** transformer block | U-Net + attention |
 
 
+  - Rectified Flow / Flow Matching 도입
+    - 일반 diffusion model 은 noise ε 를 예측하는 reverve process 를 학습함. 
+
+    - Flux 는 **rectified flow의 flow matching** 방식으로 학습함.
+
+      - 데이터 분포를 타겟 분포(가우시안)으로 연결하는 **연속적인 변환 경로(flow)**를 정의하고, 그 경로를 따라가는 **vector field** 를 학습함.
+
+      - 특히, 경로를 최단 경로인 **직선 경로**로 타겟으로 설정하여 단순한 vector field 로 학습하게 유도함.  
+
+  - Transformer 구조
+
+    - **Double/Single-stream block** 의 혼합 구조로 구성됨.
+
+      ![img](assets/img/post/2025-09-21/Fig-16.png)
+
+      - Double-stream block 은 latent 와 text token 간 별도의 weight 를 사용하고, 결합하여 attention 을 진행함.
+
+      - Single-stream block 은 latent 와 text token 이 concat 되어 공유된 weight 를 사용하고, attention 을 진행함.
 
 ## 3. FLUX.1 Kontext
+![img](assets/img/post/2025-09-21/Fig-4.png)
 
 - 텍스트 프롬프트와 레퍼런스 이미지를 jointly 하게 condition된 이미지를 생성하는 모델을 학습하는 것이 목표임.
 
