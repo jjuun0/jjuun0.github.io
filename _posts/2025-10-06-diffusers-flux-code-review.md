@@ -14,7 +14,7 @@ tags: [Flux]
 ## Inference
 - 우선, inference 코드부터 살펴보겠습니다.
 
-{% highlight python linenos %}
+```python
 import torch  
 from diffusers import FluxPipeline   
 
@@ -26,7 +26,7 @@ prompt = "A cat holding a sign that says hello world"
 # Refer to the pipeline documentation for more details.  
 image = pipe(prompt, num_inference_steps=4, guidance_scale=0.0).images[0]  
 image.save("flux.png")  
-{% endhighlight %}
+```
 
 - pipeline 만 달라서 **FluxPipeline** 내부를 살펴보겠습니다.  
 
