@@ -72,7 +72,7 @@ def __call__(
 
 ## true_cfg_scale 처리  
 - true_cfg_scale은 기본 guidance_scale과 별개로 negative prompt 관련 CFG 보정을 정밀하게 제어하기 위해 도입되었습니다.
-{% highlight python linenos %}
+```python
 do_true_cfg = true_cfg_scale > 1 and has_neg_prompt
 (
     prompt_embeds,
@@ -103,7 +103,7 @@ if do_true_cfg:
         max_sequence_length=max_sequence_length,
         lora_scale=lora_scale,
     )
-{% endhighlight %}
+```
 - true_cfg_scale 값이 1보다 크고 negative prompt 를 입력받았다면, negative_prompt_embeds 도 임베딩이 수행됩니다. 
     - 추후 denoising loop 에서 작동되는 것을 확인해보겠습니다.
 - 여기서, prompt_2 도 같이 임베딩이 되는데요. encode_prompt() 함수를 잠깐 살펴보겠습니다.
@@ -111,7 +111,7 @@ if do_true_cfg:
 
 ## encode_prompt
 - text prompt 를 text encoder 를 통해 embedding 하는 과정입니다.
-{% highlight python linenos %}
+```python
 def encode_prompt():
     ...
     # We only use the pooled prompt output from the CLIPTextModel
@@ -128,7 +128,7 @@ def encode_prompt():
         device=device,
     )
     ...
-{% endhighlight %}
+```
 - stable diffusion 과는 다르게, flux 에서는 text encoder 를 두 개, **CLIP** 과 **T5** 모델을 사용합니다.
     - CLIP: [openai/clip-vit-large-patch14](https://huggingface.co/openai/clip-vit-large-patch14)
         - text 입력 길이에 **77** token 까지 제한이 있었습니다.
@@ -140,9 +140,9 @@ def encode_prompt():
     - CLIP 은 텍스트의 핵심 정보만 추출하기 위해, embedding 전체를 대표할 수 있는 **pooled_output** 만 사용합니다.
 
 
-{% highlight python linenos %}
-
+```python
 # 6. Denoising loop
+...
 with self.transformer.cache_context("cond"):
     noise_pred = self.transformer(
         hidden_states=latents,
@@ -173,7 +173,8 @@ if do_true_cfg:
             return_dict=False,
         )[0]
     noise_pred = neg_noise_pred + true_cfg_scale * (noise_pred - neg_noise_pred)
-{% endhighlight %}
+...
+```
 
 - prompt_embeds 로 denoising 해서 noise_pred 를 예측하고, 
     - do_true_cfg 가 수행될 경우, negative_prompt_embeds 로 denoising 해서 neg_noise_pred 를 예측합니다.
