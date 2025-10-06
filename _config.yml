@@ -153,7 +153,7 @@ paginate: 10
 baseurl: ""
 
 # ------------ The following options are not recommended to be modified ------------------
-
+markdown: kramdown
 kramdown:
   footnote_backlink: "&#8617;&#xfe0e;"
   syntax_highlighter: rouge
@@ -165,6 +165,11 @@ kramdown:
     block:
       line_numbers: true
       start_line: 1
+    wrap: true
+    math_engine: mathjax
+    math_engine_opts:
+      preview: true
+      preview_as_code: true
 
 collections:
   tabs:
@@ -233,10 +238,11 @@ jekyll-archives:
 #excerpt_separator: "\n\n"
 #incremental: false
 
-markdown: kramdown
-kramdown:
-  math_engine: mathjax
-  math_engine_opts:
-    preview: true
-    preview_as_code: true
+#markdown: kramdown
+#highlighter: rough
+#kramdown:
+#  math_engine: mathjax
+#  math_engine_opts:
+#    preview: true
+#    preview_as_code: true
 
