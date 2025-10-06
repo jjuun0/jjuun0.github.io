@@ -33,7 +33,7 @@ image.save("flux.png")
 ## 입력 파라미터  
 - pipe() 가 실행되면, __call__ 가 호출되는데, 이 함수에 필요한 입력을 살펴보겠습니다.
 
-{% highlight python linenos %}
+```python
 def __call__(
         self,
         prompt: Union[str, List[str]] = None,
@@ -64,7 +64,8 @@ def __call__(
         callback_on_step_end_tensor_inputs: List[str] = ["latents"],
         max_sequence_length: int = 512,
     ):
-{% endhighlight %}
+```
+
 
 - prompt 는 prompt_2 가 추가되었습니다.  
 - guidance_scale 이외의 true_cfg_scale 이 추가로 입력됩니다. 
