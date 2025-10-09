@@ -165,11 +165,6 @@ kramdown:
     block:
       line_numbers: true
       start_line: 1
-    wrap: true
-    math_engine: mathjax
-    math_engine_opts:
-      preview: true
-      preview_as_code: true
 
 collections:
   tabs:
@@ -245,4 +240,3 @@ jekyll-archives:
 #  math_engine_opts:
 #    preview: true
 #    preview_as_code: true
-

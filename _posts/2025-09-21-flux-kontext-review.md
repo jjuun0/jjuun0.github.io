@@ -3,7 +3,7 @@ title: Flux.1 Kontext 논문 리뷰
 date: 2025-09-21
 categories: [논문]
 tags: [Flux]
-use_math: true
+math: true
 ---
 
 # FLUX.1 Kontext: Flow Matching for In-Context Image Generation and Editing in Latent Space
